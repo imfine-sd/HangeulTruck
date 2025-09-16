@@ -4,10 +4,10 @@
     {
       "route": "/hashtag",
       "rewrite": "/hashtag.html"
+    },
+     {
+      "route": "/main",
+      "rewrite": "/mainp.html"
     }
-  ],
-  "navigationFallback": {
-    "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
-  }
+  ]
 }
