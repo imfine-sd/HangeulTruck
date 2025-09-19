@@ -220,7 +220,7 @@
             return true;
           }
 
-          // 폴백: 구형 브라우저 및 모바일 지원
+          // 폴백: 구형 브라우저 및 모바일 지원 (document.execCommand 사용)
           const textArea = document.createElement("textarea");
           textArea.value = text;
           textArea.style.position = "fixed";
@@ -238,8 +238,8 @@
           textArea.focus();
           textArea.select();
 
-          // iOS 지원
-          if (navigator.userAgent.match(/ipad|iphone/i)) {
+          // iOS 지원을 위한 특별 처리
+          if (navigator.userAgent.match(/ipad|iphone|ipod/i)) {
             const range = document.createRange();
             range.selectNodeContents(textArea);
             const selection = window.getSelection();
@@ -268,11 +268,15 @@
           const success = await copyToClipboard(hashtagText);
 
           if (success) {
-            showToast("Hashtags copied to clipboard!");
-
             logEvent(analytics, "hashtag_copy");
-
             console.log("Hashtag copied and analytics event logged");
+
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+            // iOS 기기인 경우에만 커스텀 토스트 메시지를 표시
+            if (isIOS) {
+              showToast("Hashtags copied to clipboard!");
+            }
           } else {
             showToast("Failed to copy. Please try again.");
           }
