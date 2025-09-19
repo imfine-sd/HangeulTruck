@@ -27,7 +27,6 @@
       #image-wrapper {
         position: relative;
         aspect-ratio: 1080 / 3400;
-
         max-width: 100dvw;
         max-height: 100dvh;
       }
@@ -86,54 +85,69 @@
         width: 23.5%;
         height: 2.2%;
       }
+
+      @media (max-width: 889px) {
+        body,
+        html {
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+
+        body {
+          align-items: flex-start;
+        }
+
+        #image-wrapper {
+          width: 100%;
+          max-height: none;
+        }
+      }
     </style>
   </head>
   <body>
-    <!-- 이미지와 링크를 감싸는 종횡비가 유지되는 컨테이너 -->
     <div id="image-wrapper">
       <img id="bg-image" src="main.jpg" alt="배경 이미지" />
 
-      <!-- 특정 텍스트 영역 위에 올라갈 투명한 링크 -->
       <a
         href="https://maps.app.goo.gl/Hhj1evs8mBYcWjys5"
         target="_blank"
         class="clickable-link cambridge"
-        aria-label="특정 영역으로 이동"
+        aria-label="케임브리지 위치 보기"
       ></a>
 
       <a
         href="https://maps.app.goo.gl/NT4WC4q1CpkxnzSN7"
         target="_blank"
         class="clickable-link brown"
-        aria-label="특정 영역으로 이동"
+        aria-label="브라운 위치 보기"
       ></a>
 
       <a
         href="https://maps.app.goo.gl/J9ibhBG7rNgZ8wFk7"
         target="_blank"
         class="clickable-link yale"
-        aria-label="특정 영역으로 이동"
+        aria-label="예일 위치 보기"
       ></a>
 
       <a
         href="https://maps.app.goo.gl/exSDrvw8fN3JQLpV8"
         target="_blank"
         class="clickable-link penn"
-        aria-label="특정 영역으로 이동"
+        aria-label="펜실베니아 위치 보기"
       ></a>
 
       <a
         href="https://maps.app.goo.gl/wcPDYPsrxQKuw25b7"
         target="_blank"
         class="clickable-link princeton"
-        aria-label="특정 영역으로 이동"
+        aria-label="프린스턴 위치 보기"
       ></a>
 
       <a
         href="https://maps.app.goo.gl/Yu8bNprJVg5tivaM7"
         target="_blank"
         class="clickable-link cornell"
-        aria-label="특정 영역으로 이동"
+        aria-label="코넬 위치 보기"
       ></a>
     </div>
   </body>
