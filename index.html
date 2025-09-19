@@ -14,21 +14,23 @@
         padding: 0;
         width: 100%;
         height: 100%;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
         background-color: white;
       }
 
       body {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
       }
 
       #image-wrapper {
         position: relative;
+        width: 100%;
+        max-width: 900px;
         aspect-ratio: 1080 / 3400;
-        max-width: 100dvw;
-        max-height: 100dvh;
+        max-height: none;
       }
 
       #bg-image {
@@ -85,28 +87,11 @@
         width: 23.5%;
         height: 2.2%;
       }
-
-      @media (max-width: 889px) {
-        body,
-        html {
-          overflow-y: auto;
-          overflow-x: hidden;
-        }
-
-        body {
-          align-items: flex-start;
-        }
-
-        #image-wrapper {
-          width: 100%;
-          max-height: none;
-        }
-      }
     </style>
   </head>
   <body>
     <div id="image-wrapper">
-      <img id="bg-image" src="main.jpg" alt="배경 이미지" />
+      <img id="bg-image" src="main.jpg" alt="background" />
 
       <a
         href="https://maps.app.goo.gl/Hhj1evs8mBYcWjys5"
@@ -114,35 +99,30 @@
         class="clickable-link cambridge"
         aria-label="케임브리지 위치 보기"
       ></a>
-
       <a
         href="https://maps.app.goo.gl/NT4WC4q1CpkxnzSN7"
         target="_blank"
         class="clickable-link brown"
         aria-label="브라운 위치 보기"
       ></a>
-
       <a
         href="https://maps.app.goo.gl/J9ibhBG7rNgZ8wFk7"
         target="_blank"
         class="clickable-link yale"
         aria-label="예일 위치 보기"
       ></a>
-
       <a
         href="https://maps.app.goo.gl/exSDrvw8fN3JQLpV8"
         target="_blank"
         class="clickable-link penn"
         aria-label="펜실베니아 위치 보기"
       ></a>
-
       <a
         href="https://maps.app.goo.gl/wcPDYPsrxQKuw25b7"
         target="_blank"
         class="clickable-link princeton"
         aria-label="프린스턴 위치 보기"
       ></a>
-
       <a
         href="https://maps.app.goo.gl/Yu8bNprJVg5tivaM7"
         target="_blank"
@@ -151,4 +131,41 @@
       ></a>
     </div>
   </body>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAnalytics,
+      logEvent,
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9d2wSrmgCLdnr9ZtGGDARzaj78n6mm9I",
+      authDomain: "hangul-truck.firebaseapp.com",
+      projectId: "hangul-truck",
+      storageBucket: "hangul-truck.firebasestorage.app",
+      messagingSenderId: "141768649099",
+      appId: "1:141768649099:web:2b7188b8f7b9ae77d4a78e",
+      measurementId: "G-H4RZGYHQDV",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    const clickableLinks = document.querySelectorAll(".clickable-link");
+
+    clickableLinks.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const universityName = event.currentTarget.classList[1];
+        const destinationUrl = event.currentTarget.href;
+        const linkTarget = event.currentTarget.target;
+
+        logEvent(analytics, `campus_${universityName}_clicked`);
+
+        setTimeout(() => {
+          window.open(destinationUrl, linkTarget);
+        }, 300);
+      });
+    });
+  </script>
 </html>
