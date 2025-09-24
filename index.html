@@ -151,6 +151,10 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
 
+    document.addEventListener("DOMContentLoaded", () => {
+      logEvent(analytics, "main_view");
+    });
+
     const clickableLinks = document.querySelectorAll(".clickable-link");
 
     clickableLinks.forEach((link) => {

@@ -182,6 +182,7 @@
       function showContent() {
         updateBackground();
         imageWrapper.classList.add("loaded");
+        logEvent(analytics, "hashtag_view");
       }
 
       if (image.complete) {
