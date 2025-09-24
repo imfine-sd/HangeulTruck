@@ -10,8 +10,8 @@
     <style>
       :root {
         --sky-blue: #619ef7;
-        --dark-blue: #619ef7;
-        --split-point: 64.773%;
+        --dark-blue: #3f6ced;
+        --split-point: 65.04%;
       }
 
       body,
@@ -29,27 +29,28 @@
         width: 100%;
         height: 100%;
         z-index: -1;
-        background: linear-gradient(
-          to bottom,
-          var(--sky-blue) 0%,
-          var(--sky-blue) var(--split-point),
-          var(--dark-blue) var(--split-point),
-          var(--dark-blue) 100%
-        );
+        background-color: var(--sky-blue);
       }
 
       body {
         display: flex;
         min-height: 100vh;
+        justify-content: center;
+        align-items: flex-start;
       }
 
       #image-wrapper {
-        margin: auto;
         position: relative;
         width: 100%;
         max-width: 600px;
         flex-shrink: 0;
         z-index: 1;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+      }
+
+      #image-wrapper.loaded {
+        opacity: 1;
       }
 
       #bg-image {
@@ -64,7 +65,6 @@
         position: absolute;
         cursor: pointer;
         z-index: 10;
-        /* 디버깅용 배경색 (필요시 주석 해제) */
         /* background-color: rgba(255, 0, 0, 0.2); */
       }
 
@@ -111,7 +111,6 @@
     <div class="background-container"></div>
 
     <div id="image-wrapper">
-      <div id="dynamic-background"></div>
       <img id="bg-image" src="hashtag-vertical.jpg" alt="Hashtag Event" />
 
       <div
@@ -149,32 +148,58 @@
           ".background-container"
         );
         const rect = wrapper.getBoundingClientRect();
+        const splitPoint =
+          parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--split-point"
+            )
+          ) / 100;
 
-        const splitY = rect.top + rect.height * 0.64773;
+        const splitY = rect.top + rect.height * splitPoint;
         const viewportHeight = window.innerHeight;
         const splitPercentage = (splitY / viewportHeight) * 100;
+        const skyBlue = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--sky-blue");
+        const darkBlue = getComputedStyle(
+          document.documentElement
+        ).getPropertyValue("--dark-blue");
 
         backgroundContainer.style.background = `
           linear-gradient(
             to bottom,
-            var(--sky-blue) 0%,
-            var(--sky-blue) ${splitPercentage}%,
-            var(--dark-blue) ${splitPercentage}%,
-            var(--dark-blue) 100%
+            ${skyBlue} 0%,
+            ${skyBlue} ${splitPercentage}%,
+            ${darkBlue} ${splitPercentage}%,
+            ${darkBlue} 100%
           )
         `;
       }
+
+      const imageWrapper = document.getElementById("image-wrapper");
+      const image = document.getElementById("bg-image");
+
+      function showContent() {
+        updateBackground();
+        imageWrapper.classList.add("loaded");
+      }
+
+      if (image.complete) {
+        showContent();
+      } else {
+        image.addEventListener("load", showContent);
+      }
+
+      window.addEventListener("resize", updateBackground);
+      window.addEventListener("scroll", updateBackground);
 
       let toastTimer;
 
       function showToast(message) {
         const toast = document.getElementById("toast");
         toast.textContent = message;
-
         clearTimeout(toastTimer);
-
         toast.classList.add("show");
-
         toastTimer = setTimeout(() => {
           toast.classList.remove("show");
         }, 2000);
@@ -186,36 +211,16 @@
             await navigator.clipboard.writeText(text);
             return true;
           }
-
           const textArea = document.createElement("textarea");
           textArea.value = text;
           textArea.style.position = "fixed";
           textArea.style.top = "0";
           textArea.style.left = "0";
-          textArea.style.width = "2em";
-          textArea.style.height = "2em";
-          textArea.style.padding = "0";
-          textArea.style.border = "none";
-          textArea.style.outline = "none";
-          textArea.style.boxShadow = "none";
-          textArea.style.background = "transparent";
-
           document.body.appendChild(textArea);
           textArea.focus();
           textArea.select();
-
-          if (navigator.userAgent.match(/ipad|iphone|ipod/i)) {
-            const range = document.createRange();
-            range.selectNodeContents(textArea);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            textArea.setSelectionRange(0, 999999);
-          }
-
           const success = document.execCommand("copy");
           document.body.removeChild(textArea);
-
           return success;
         } catch (err) {
           console.error("Failed to copy:", err);
@@ -227,24 +232,15 @@
         .getElementById("hashtag-copy-btn")
         .addEventListener("click", async function (e) {
           e.preventDefault();
-
           const hashtagText = "#HangeulTruck #GalaxyAI #Promo";
-
           const success = await copyToClipboard(hashtagText);
-
           if (success) {
             logEvent(analytics, "hashtag_copy");
-            console.log("Hashtag copied and analytics event logged");
-
             showToast("Hashtags copied to clipboard!");
           } else {
             showToast("Failed to copy. Please try again.");
           }
         });
-
-      window.addEventListener("load", updateBackground);
-      window.addEventListener("resize", updateBackground);
-      window.addEventListener("scroll", updateBackground);
     </script>
   </body>
 </html>
