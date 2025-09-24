@@ -10,7 +10,7 @@
     <style>
       :root {
         --sky-blue: #619ef7;
-        --dark-blue: #3f6ced;
+        --dark-blue: #619ef7;
         --split-point: 64.773%;
       }
 
@@ -19,7 +19,6 @@
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 100%;
         overflow-x: clip;
       }
 
@@ -41,58 +40,22 @@
 
       body {
         display: flex;
-        align-items: center;
-        justify-content: center;
         min-height: 100vh;
-        box-sizing: border-box;
-        position: relative;
       }
 
       #image-wrapper {
+        margin: auto;
+        position: relative;
         width: 100%;
         max-width: 600px;
-        max-height: 100vh;
         flex-shrink: 0;
-        position: relative;
         z-index: 1;
-      }
-
-      #dynamic-background {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100vw;
-        height: 100%;
-        z-index: 0;
-        pointer-events: none;
-      }
-
-      #dynamic-background::before,
-      #dynamic-background::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        left: 0;
-      }
-
-      #dynamic-background::before {
-        top: 0;
-        height: var(--split-point);
-        background-color: var(--sky-blue);
-      }
-
-      #dynamic-background::after {
-        top: var(--split-point);
-        bottom: 0;
-        background-color: var(--dark-blue);
       }
 
       #bg-image {
         display: block;
-        aspect-ratio: 1080 / 1920;
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1080 / 1920;
         position: relative;
         z-index: 2;
       }
@@ -101,13 +64,12 @@
         position: absolute;
         cursor: pointer;
         z-index: 10;
-        /* 디버깅용 - 나중에 제거 가능 */
+        /* 디버깅용 배경색 (필요시 주석 해제) */
         /* background-color: rgba(255, 0, 0, 0.2); */
-        /* border: 1px solid red; */
       }
 
       #hashtag-copy-btn {
-        top: 42.5%;
+        top: 42.2%;
         left: 5%;
         width: 90%;
         height: 8%;
