@@ -50,8 +50,8 @@
 
       #image-wrapper {
         width: 100%;
-        max-width: 1020px;
-        aspect-ratio: 1 / 1;
+        max-width: 600px;
+        max-height: 100vh;
         flex-shrink: 0;
         position: relative;
         z-index: 1;
@@ -90,6 +90,7 @@
 
       #bg-image {
         display: block;
+        aspect-ratio: 1080 / 1920;
         width: 100%;
         height: 100%;
         position: relative;
@@ -107,20 +108,19 @@
 
       #hashtag-copy-btn {
         top: 42.5%;
-        left: 25%;
-        width: 50%;
+        left: 5%;
+        width: 90%;
         height: 8%;
       }
 
       .click-area:active {
-        transform: scale(0.95);
+        /* transform: scale(0.95); */
       }
 
       .toast {
         position: fixed;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
+        top: 20px;
+        right: 20px;
         background-color: rgba(0, 0, 0, 0.8);
         color: white;
         padding: 12px 24px;
@@ -150,7 +150,7 @@
 
     <div id="image-wrapper">
       <div id="dynamic-background"></div>
-      <img id="bg-image" src="hashtag.jpg" alt="Hashtag Event" />
+      <img id="bg-image" src="hashtag-vertical.jpg" alt="Hashtag Event" />
 
       <div
         id="hashtag-copy-btn"
@@ -203,12 +203,17 @@
         `;
       }
 
+      let toastTimer;
+
       function showToast(message) {
         const toast = document.getElementById("toast");
         toast.textContent = message;
+
+        clearTimeout(toastTimer);
+
         toast.classList.add("show");
 
-        setTimeout(() => {
+        toastTimer = setTimeout(() => {
           toast.classList.remove("show");
         }, 2000);
       }
@@ -220,7 +225,6 @@
             return true;
           }
 
-          // 폴백: 구형 브라우저 및 모바일 지원 (document.execCommand 사용)
           const textArea = document.createElement("textarea");
           textArea.value = text;
           textArea.style.position = "fixed";
@@ -238,7 +242,6 @@
           textArea.focus();
           textArea.select();
 
-          // iOS 지원을 위한 특별 처리
           if (navigator.userAgent.match(/ipad|iphone|ipod/i)) {
             const range = document.createRange();
             range.selectNodeContents(textArea);
@@ -271,12 +274,7 @@
             logEvent(analytics, "hashtag_copy");
             console.log("Hashtag copied and analytics event logged");
 
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-            // iOS 기기인 경우에만 커스텀 토스트 메시지를 표시
-            if (isIOS) {
-              showToast("Hashtags copied to clipboard!");
-            }
+            showToast("Hashtags copied to clipboard!");
           } else {
             showToast("Failed to copy. Please try again.");
           }
