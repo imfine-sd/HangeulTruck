@@ -142,6 +142,35 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
 
+      // 이미지 소스 결정 함수
+      function determineImageSource() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const previewParam = urlParams.get("v");
+
+        // 미리보기 파라미터가 있으면 새 이미지 사용
+        if (previewParam === "_hangeul_truck_preview_20251006") {
+          return "hashtag_vertical_new.jpg";
+        }
+
+        // 현재 시간 체크 (브라우저 로컬 시간 기준)
+        const now = new Date();
+
+        // 2025년 10월 6일 00:00 ~ 10월 7일 24:00 (10월 8일 00:00 전까지)
+        const startDate = new Date(2025, 9, 6, 0, 0, 0); // 월은 0부터 시작하므로 9 = 10월
+        const endDate = new Date(2025, 9, 8, 0, 0, 0); // 10월 8일 00:00
+
+        if (now >= startDate && now < endDate) {
+          return "hashtag_vertical_new.jpg";
+        }
+
+        // 기본 이미지
+        return "hashtag-vertical.jpg";
+      }
+
+      // 이미지 소스 설정
+      const image = document.getElementById("bg-image");
+      image.src = determineImageSource();
+
       function updateBackground() {
         const wrapper = document.getElementById("image-wrapper");
         const backgroundContainer = document.querySelector(
@@ -177,7 +206,6 @@
       }
 
       const imageWrapper = document.getElementById("image-wrapper");
-      const image = document.getElementById("bg-image");
 
       function showContent() {
         updateBackground();
