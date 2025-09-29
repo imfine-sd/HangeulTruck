@@ -159,6 +159,8 @@
 
       // 미리보기 파라미터가 있으면 새 이미지 사용
       if (previewParam === "_hangeul_truck_preview_20251006") {
+        // 타이틀 변경
+        document.title = "HangeulTruck_Preview";
         return "main_new.jpeg";
       }
 
@@ -182,7 +184,14 @@
     image.src = determineImageSource();
 
     document.addEventListener("DOMContentLoaded", () => {
-      logEvent(analytics, "main_view");
+      const urlParams = new URLSearchParams(window.location.search);
+      const previewParam = urlParams.get("v");
+
+      if (previewParam === "_hangeul_truck_preview_20251006") {
+        logEvent(analytics, "main_preview_view");
+      } else {
+        logEvent(analytics, "main_view");
+      }
     });
 
     const clickableLinks = document.querySelectorAll(".clickable-link");
