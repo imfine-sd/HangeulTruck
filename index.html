@@ -47,88 +47,62 @@
         /* background-color: rgba(255, 0, 0, 0.3); */
       }
 
-      .clickable-link.cambridge {
+      .clickable-link.usc {
         top: 78.7%;
         left: 37.8%;
         width: 45%;
         height: 2.2%;
       }
 
-      .clickable-link.brown {
+      .clickable-link.ucla {
         top: 81.2%;
         left: 37.6%;
-        width: 22.7%;
+        width: 45%;
         height: 2.2%;
       }
 
-      .clickable-link.yale {
+      .clickable-link.us-berkeley {
         top: 83.8%;
         left: 37.7%;
-        width: 19%;
+        width: 45%;
         height: 2.2%;
       }
 
-      .clickable-link.penn {
+      .clickable-link.stanford {
         top: 86.24%;
         left: 38.1%;
-        width: 19.5%;
-        height: 2.2%;
-      }
-
-      .clickable-link.princeton {
-        top: 88.8%;
-        left: 37.5%;
-        width: 27.5%;
-        height: 2.2%;
-      }
-
-      .clickable-link.cornell {
-        top: 91.3%;
-        left: 37.6%;
-        width: 23.5%;
+        width: 45%;
         height: 2.2%;
       }
     </style>
   </head>
   <body>
     <div id="image-wrapper">
-      <img id="bg-image" src="main.jpeg" alt="background" />
+      <img id="bg-image" src="main_event.jpg" alt="background" />
 
       <a
-        href="https://maps.app.goo.gl/Hhj1evs8mBYcWjys5"
+        href="https://maps.app.goo.gl/RmQuKGHe7gKCVBV4A"
         target="_blank"
-        class="clickable-link cambridge"
-        aria-label="케임브리지 위치 보기"
+        class="clickable-link usc"
+        aria-label="USC, McCarthy Quad"
       ></a>
       <a
-        href="https://maps.app.goo.gl/NT4WC4q1CpkxnzSN7"
+        href="https://maps.app.goo.gl/HH974fQHwosfMuLw9"
         target="_blank"
-        class="clickable-link brown"
-        aria-label="브라운 위치 보기"
+        class="clickable-link ucla"
+        aria-label="UCLA, Court of Sciences"
       ></a>
       <a
-        href="https://maps.app.goo.gl/J9ibhBG7rNgZ8wFk7"
+        href="https://maps.app.goo.gl/kiFzq7msydBMSzFb7"
         target="_blank"
-        class="clickable-link yale"
-        aria-label="예일 위치 보기"
+        class="clickable-link us-berkeley"
+        aria-label="US Berkeley, South Hall rd."
       ></a>
       <a
-        href="https://maps.app.goo.gl/exSDrvw8fN3JQLpV8"
+        href="https://maps.app.goo.gl/GWFnFxCcPjGUjP7m8"
         target="_blank"
-        class="clickable-link penn"
-        aria-label="펜실베니아 위치 보기"
-      ></a>
-      <a
-        href="https://maps.app.goo.gl/wcPDYPsrxQKuw25b7"
-        target="_blank"
-        class="clickable-link princeton"
-        aria-label="프린스턴 위치 보기"
-      ></a>
-      <a
-        href="https://maps.app.goo.gl/Yu8bNprJVg5tivaM7"
-        target="_blank"
-        class="clickable-link cornell"
-        aria-label="코넬 위치 보기"
+        class="clickable-link stanford"
+        aria-label="Stanford, South Lawn"
       ></a>
     </div>
   </body>
@@ -157,26 +131,23 @@
       const urlParams = new URLSearchParams(window.location.search);
       const previewParam = urlParams.get("v");
 
-      // 미리보기 파라미터가 있으면 새 이미지 사용
+      // 미리보기 파라미터가 있으면 new 버전 이미지 사용
       if (previewParam === "_hangeul_truck_preview_20251006") {
-        // 타이틀 변경
         document.title = "HangeulTruck_Preview";
         return "main_new.jpeg";
       }
 
-      // 현재 시간 체크 (브라우저 로컬 시간 기준)
       const now = new Date();
 
-      // 2025년 10월 6일 00:00 ~ 10월 7일 24:00 (10월 8일 00:00 전까지)
-      const startDate = new Date(2025, 9, 6, 0, 0, 0); // 월은 0부터 시작하므로 9 = 10월
-      const endDate = new Date(2025, 9, 8, 0, 0, 0); // 10월 8일 00:00
+      const startDate = new Date(2025, 9, 6, 0, 0, 0);
+      const endDate = new Date(2025, 9, 8, 0, 0, 0);
 
       if (now >= startDate && now < endDate) {
         return "main_new.jpeg";
       }
 
       // 기본 이미지
-      return "main.jpeg";
+      return "main_event.jpg";
     }
 
     // 이미지 소스 설정
