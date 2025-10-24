@@ -113,7 +113,7 @@
     <div class="background-container"></div>
 
     <div id="image-wrapper">
-      <img id="bg-image" src="hashtag-vertical.jpg" alt="Hashtag Event" />
+      <img id="bg-image" src="hashtag_event.jpg" alt="Hashtag Event" />
 
       <div
         id="hashtag-copy-btn"
@@ -151,24 +151,21 @@
 
         // 미리보기 파라미터가 있으면 새 이미지 사용
         if (previewParam === "_hangeul_truck_preview_20251006") {
-          // 타이틀 변경
           document.title = "HangeulTruck | Hashtag_Preview";
           return "hashtag_vertical_new.jpg";
         }
 
-        // 현재 시간 체크 (브라우저 로컬 시간 기준)
         const now = new Date();
 
-        // 2025년 10월 6일 00:00 ~ 10월 7일 24:00 (10월 8일 00:00 전까지)
-        const startDate = new Date(2025, 9, 6, 0, 0, 0); // 월은 0부터 시작하므로 9 = 10월
-        const endDate = new Date(2025, 9, 8, 0, 0, 0); // 10월 8일 00:00
+        const startDate = new Date(2025, 9, 6, 0, 0, 0);
+        const endDate = new Date(2025, 9, 8, 0, 0, 0);
 
         if (now >= startDate && now < endDate) {
           return "hashtag_vertical_new.jpg";
         }
 
         // 기본 이미지
-        return "hashtag-vertical.jpg";
+        return "hashtag_event.jpg";
       }
 
       // 이미지 소스 설정
